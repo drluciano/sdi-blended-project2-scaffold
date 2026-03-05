@@ -31,7 +31,7 @@ const Login = () => {
 
     return (
         <>
-            <div className={'flex flex-col items-center justify-center h-screen max-h-full'}>
+            <div className={'flex flex-col items-center justify-center h-full'}>
                 {userListChecker()}
                 <div className={'divider'}></div>
                 <button className="btn btn-neutral"
