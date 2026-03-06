@@ -10,13 +10,15 @@ import {PlanContext} from './context/PlanContext.jsx';
 import CreatePlan from './components/CreatePlan.jsx';
 
 function App() {
+    const navigate = useNavigate();
+
     const existingUsers = JSON.parse(localStorage.getItem('users')) ?? [];
     const [users, setUsers] = useState(existingUsers);
+
     const loggedInUser = JSON.parse(localStorage.getItem('currentUser')) ?? null;
     const [currentUser, setCurrentUser] = useState(loggedInUser);
-    const navigate = useNavigate();
-    const [plans, setPlans] = useState([]);
-    const [plan, setPlan] = useState(null);
+
+    const [currentPlan, setCurrentPlan] = useState(null);
 
     useEffect(() => {
         if (!currentUser) {
@@ -27,10 +29,10 @@ function App() {
     return (
         <>
             <UserContext.Provider value={{currentUser, setCurrentUser, users, setUsers}}>
-                <PlanContext.Provider value={{plans, setPlans, plan, setPlan}}>
+                <PlanContext.Provider value={{currentPlan, setCurrentPlan}}>
                     <div className={'flex flex-col h-screen'}>
                         <Navbar/>
-                        <div className={'p-10 flex-grow'}>
+                        <div className={'p-10 grow'}>
                             <Routes>
                                 <Route path={'/'} element={<Loading/>}/>
                                 <Route path={'login'} element={<Login/>}/>

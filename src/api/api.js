@@ -1,4 +1,4 @@
-export const fetchPhoto = async (searchParam) => {
+export const fetchPhoto = async (searchParameter) => {
     const response = await fetch(`https://api.pexels.com/v1/search?query=${searchParameter}`, {
         headers: {
             Authorization: 'Y8ESpTBDSSubxdsRobqXXYWyLezQGXS5VKmot8xkC63RNF6JbGyFLL8d'
@@ -6,3 +6,4 @@ export const fetchPhoto = async (searchParam) => {
     });
     return response.json();
 };
+

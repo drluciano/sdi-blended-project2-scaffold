@@ -34,8 +34,7 @@ const Navbar = () => {
                 <>
                     <div className="flex-none">
                         <ul className="menu menu-horizontal px-1">
-                            <li><a>Plans</a></li>
-
+                            <li><a onClick={() => navigate('/home')}>My Plans</a></li>
                             <li>
                                 <details>
                                     <summary>More</summary>
