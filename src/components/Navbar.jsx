@@ -1,11 +1,20 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {UserContext} from '../context/UserContext.jsx';
 import {useNavigate} from 'react-router';
+import {PlanContext} from '../context/PlanContext.jsx';
 
 const Navbar = () => {
     const {currentUser, setCurrentUser} = useContext(UserContext);
+    const {currentPlan, setCurrentPlan} = useContext(PlanContext);
     const navigate = useNavigate();
-    const [mode, setMode] = useState(true);
+
+    const savedMode = JSON.parse(localStorage.getItem(`mode_${currentUser}`)) ?? true;
+    const [mode, setMode] = useState(savedMode);
+
+    useEffect(() => {
+        const savedMode = JSON.parse(localStorage.getItem(`mode_${currentUser}`));
+        setMode(savedMode !== null ? savedMode : true);
+    }, [currentUser]);
 
 
     const logoChanger = () => {
@@ -14,7 +23,10 @@ const Navbar = () => {
                 <>
                     <img src={'/logo.png'} alt={'CAMPY LOGO'}
                          className={'max-h-10 cursor-pointer hover:scale-110 transition-all ease-in-out'}
-                         onClick={() => navigate('/home')}/>
+                         onClick={() => {
+                             navigate('/');
+                             setCurrentPlan(null);
+                         }}/>
                 </>
             );
         } else if (mode === false) {
@@ -22,7 +34,10 @@ const Navbar = () => {
                 <>
                     <img src={'/logo-dark.png'} alt={'CAMPY LOGO'}
                          className={'max-h-10 cursor-pointer hover:scale-110 transition-all ease-in-out'}
-                         onClick={() => navigate('/home')}/>
+                         onClick={() => {
+                             navigate('/');
+                             setCurrentPlan(null);
+                         }}/>
                 </>
             );
         }
@@ -34,7 +49,10 @@ const Navbar = () => {
                 <>
                     <div className="flex-none">
                         <ul className="menu menu-horizontal px-1">
-                            <li><a onClick={() => navigate('/home')}>My Plans</a></li>
+                            <li><a onClick={() => {
+                                navigate('/home');
+                                setCurrentPlan(null);
+                            }}>My Plans</a></li>
                             <li>
                                 <details>
                                     <summary>More</summary>
@@ -46,6 +64,7 @@ const Navbar = () => {
                                         <li><a href={'https://www.recreation.gov/'}>Rec.gov</a></li>
                                         <li><a onClick={() => {
                                             setCurrentUser(null);
+                                            setCurrentPlan(null);
                                             localStorage.setItem('currentUser', null);
                                             navigate('/');
                                         }}>Logout</a></li>
@@ -61,7 +80,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="navbar bg-base-200 shadow-sm px-4 z-1000">
+            <div className="navbar bg-base-200 shadow-sm px-4 z-1000 fixed w-full">
                 <div className="flex-1">
                     <div className={'flex flex-row gap-2 items-center'}>
                         {logoChanger()}
@@ -71,9 +90,12 @@ const Navbar = () => {
                 {renderLinks()}
                 <label className="swap swap-rotate">
                     {/* this hidden checkbox controls the state */}
-                    <input type="checkbox" className="theme-controller" value="dark" onClick={() => {
-                        setMode(!mode);
-                    }}/>
+                    <input type="checkbox" className="theme-controller" value="dark"
+                           checked={!mode}
+                           onChange={() => {
+                               setMode(!mode);
+                               localStorage.setItem(`mode_${currentUser}`, JSON.stringify(!mode));
+                           }}/>
 
                     {/* sun icon */}
                     <svg

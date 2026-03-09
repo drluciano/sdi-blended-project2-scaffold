@@ -3,9 +3,14 @@ import {UserContext} from '../context/UserContext.jsx';
 import {UserPlus} from 'lucide-react';
 import CreateUserModal from './CreateUserModal.jsx';
 import UserCard from './UserCard.jsx';
+import {useNavigate} from 'react-router';
 
 const Login = () => {
     const {currentUser, users, setUsers} = useContext(UserContext);
+
+    const navigate = useNavigate();
+
+    if (currentUser) navigate('/home');
 
     const userListChecker = () => {
         if (users.length === 0) {

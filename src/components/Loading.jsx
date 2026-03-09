@@ -3,7 +3,6 @@ import {useNavigate} from 'react-router';
 const Loading = () => {
     const navigate = useNavigate();
 
-    setTimeout(() => navigate('/login'), 3000);
 
     return (
         <>

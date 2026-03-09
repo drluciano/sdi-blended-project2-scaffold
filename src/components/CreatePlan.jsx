@@ -1,6 +1,7 @@
 import {useContext, useState} from 'react';
 import {UserContext} from '../context/UserContext.jsx';
 import {useNavigate} from 'react-router';
+import {PlanContext} from '../context/PlanContext.jsx';
 
 const CreatePlan = () => {
     const {currentUser} = useContext(UserContext);
@@ -10,6 +11,8 @@ const CreatePlan = () => {
     const [radio, setRadio] = useState(true);
 
     const navigate = useNavigate();
+
+    const {plans, setPlans} = useContext(PlanContext);
 
     const [details, setDetails] = useState({
         planId: crypto.randomUUID(),
@@ -55,6 +58,7 @@ const CreatePlan = () => {
 
         const previousUserPlans = JSON.parse(localStorage.getItem(`plans_${currentUser}`)) ?? [];
         const allUserPlans = [...previousUserPlans, tripDetails];
+        // setPlans([...plans, allUserPlans]);
         localStorage.setItem(`plans_${currentUser}`, JSON.stringify(allUserPlans));
 
         setProgress(0);
