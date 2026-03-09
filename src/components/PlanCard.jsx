@@ -2,17 +2,14 @@ import {useContext, useEffect, useState} from 'react';
 import {fetchPhoto} from '../api/api.js';
 import {useNavigate} from 'react-router';
 import {UserContext} from '../context/UserContext.jsx';
+import {PlanContext} from '../context/PlanContext.jsx';
 import {Trash} from 'lucide-react';
 
 const PlanCard = ({data, setPlanToDelete, setPlanToShare}) => {
-    // console.log(data);
-    // console.log(index);
-
     const [photoData, setPhotoData] = useState(null);
 
     const {currentUser} = useContext(UserContext);
-
-    // const {setCurrentPlan} = useContext(PlanContext);
+    const {setCurrentPlan} = useContext(PlanContext);
 
     const navigate = useNavigate();
 

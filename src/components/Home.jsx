@@ -22,6 +22,7 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
 
     const [planToDelete, setPlanToDelete] = useState(null);
+
     const [planToShare, setPlanToShare] = useState(null);
 
 
@@ -108,7 +109,8 @@ const Home = () => {
                     {conditionalRenderer()}
                     {cardRenderer()}
                     <DeleteModal data={planToDelete} handleDelete={() => handleDelete(planToDelete)}/>
-                    <ShareModal data={planToShare} handleShare={(plan, selectedUser) => handleShare(plan, selectedUser)}/>
+                    <ShareModal data={planToShare}
+                                handleShare={(plan, selectedUser) => handleShare(plan, selectedUser)}/>
                 </div>
                 <div className={'divider'}/>
                 <div className={'flex flex-col'}>

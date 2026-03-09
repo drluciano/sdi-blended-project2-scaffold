@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {UserContext} from '../context/UserContext.jsx';
 import {UserPlus} from 'lucide-react';
 import CreateUserModal from './CreateUserModal.jsx';
@@ -10,7 +10,9 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    if (currentUser) navigate('/home');
+    useEffect(() => {
+        if (currentUser) navigate('/home');
+    }, [currentUser]);
 
     const userListChecker = () => {
         if (users.length === 0) {
